@@ -1,6 +1,6 @@
 const express = require('express')
 const morgan = require("morgan");
-const {db, Page, User} = require('./models/index');
+const { db, Page, User } = require('./models/index');
 const wikiRouter = require('./routes/wiki');
 const userRouter = require('./routes/users');
 
@@ -23,14 +23,14 @@ app.use('/wiki', wikiRouter);
 
 app.get('/', (req, res, next) => {
   try {
-    res.send(layout(''));
+    res.redirect('/wiki');
   } catch (error) {
     next(error);
   }
 })
 
 const init = async () => {
-  await db.sync({force: true});
+  await db.sync({ force: true });
 
   app.listen(3000, () => {
     console.log(`Server is listening on port 3000!`);

@@ -29,10 +29,15 @@ const Page = db.define('page', {
     type: Sequelize.ENUM('open', 'closed')
   },
 })
-
+Page.addHook('beforeValidate', (Page, options) => {
+  const generateSlug = (title) => {
+    return title.replace(/\s+/g, '_').replace(/\W/g, '');
+  }
+  Page.slug = generateSlug(Page.title)
+});
 const User = db.define('user', {
-  name:{
-    type:Sequelize.STRING,
+  name: {
+    type: Sequelize.STRING,
     allowNull: false,
     validate: {
       unique: true,
